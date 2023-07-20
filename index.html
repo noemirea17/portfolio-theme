@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="https://unpkg.com/@alpinejs/ui@3.10.5-beta.8/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.10.5/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="css/main.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body  x-data="{ isDialogOpen: false }">
+    <section class="bg-radial-black">
+      <div>
+        <img class="w-full" src="assets/Polygon.svg" alt="">
+        <div class="max-w-7xl mx-auto flex ">
+          <img src="assets/less-than-solid.svg" class="w-4" alt="">
+          <span class="text-green font-bold text-md mx-1">  Noemi Rea </span>
+          <img src="assets/slash-forward-solid.svg" class="w-4" alt="">
+          <img src="assets/greater-than-solid.svg" class="w-4" alt="">
+        </div>
+      </div>
+      <div class="flex flex-col-reverse md:flex-row px-10 md:px-40 py-36 justify-between items-center max-w-7xl mx-auto">
+        <div class="text-md">
+          <p class="text-white">Ciao!</p>
+          <p class="font-bold text-white">Sono Noemi Rea, una Jr. Front-end Web Developer.</p>
+          <!-- <p class="font-bold text-white">Grazie ai miei studi, ho appreso tecnologie utilizzate nello sviluppo web, sia lato front-end che back-end.</p> -->
+        </div>
+        <div>
+          <img src="assets/Group 15.png" alt="">
+        </div>
+      </div>
+    </section>
+    <section class="border-wrap">
+      <div class="bg-black-900 py-10">
+        <div class="max-w-7xl mx-auto">
+          <h2 class="text-xl text-white text-center font-bold">PROGETTI</h2>
+          <div x-data="{
+              selectedId: null,
+              init() {
+                  // Set the first available tab on the page on page load.
+                  this.$nextTick(() => this.select(this.$id('tab', 1)))
+              },
+              select(id) {
+                  this.selectedId = id
+              },
+              isSelected(id) {
+                  return this.selectedId === id
+              },
+              whichChild(el, parent) {
+                  return Array.from(parent.children).indexOf(el) + 1
+              }
+            }"
+            x-id="['tab']">
+            <!-- tab list -->
+              <div x-ref="tablist"
+                @keydown.right.prevent.stop="$focus.wrap().next()"
+                @keydown.home.prevent.stop="$focus.first()"
+                @keydown.page-up.prevent.stop="$focus.first()"
+                @keydown.left.prevent.stop="$focus.wrap().prev()"
+                @keydown.end.prevent.stop="$focus.last()"
+                @keydown.page-down.prevent.stop="$focus.last()"
+                role="tablist" class="text-center my-16 bg-white flex rounded-[30px] py-1 px-3 text-base max-w-[200px] justify-center m-auto">
+                <div>
+                  <button 
+                  :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                  @click="select($el.id)"
+                  @mousedown.prevent
+                  @focus="select($el.id)"
+                  type="button"
+                  :tabindex="isSelected($el.id) ? 0 : -1"
+                  :aria-selected="isSelected($el.id)"
+                  role="tab"
+                  :class="isSelected($el.id) ? 'bg-blue text-white' : 'bg-white text-black'"
+                  class="p-2 rounded-[30px] mr-4">Development</button>
+                </div>
+                <div>
+                  <button
+                  :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                  @click="select($el.id)"
+                  @mousedown.prevent
+                  @focus="select($el.id)"
+                  type="button"
+                  :tabindex="isSelected($el.id) ? 0 : -1"
+                  :aria-selected="isSelected($el.id)"
+                  :class="isSelected($el.id) ? 'bg-blue text-white' : 'bg-white text-black'"
+                  role="tab"
+                  class=" p-2 rounded-[30px]">Design</button>
+                </div>
+              </div>
+              <!-- panels -->
+              <div role="tabpanels">
+                <!-- Panel -->
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 justify-items-center"
+                >
+                    <!-- single card -->
+                  <div class="max-w-[300px] card-shadow">
+                    <div>
+                      <img src="assets/spotify.png" alt="">
+                    </div>
+                    <div class="bg-lightblue rounded-b-[20px] p-6 h-64 " >
+                      <h3 class="text-md font-bold">Spotify</h3>
+                      <p class="text-base">Replica responsive dell'interfaccia di Spotify Web. Ho applicato stili per replicare l'aspetto visivo e il layout di Spotify Web e ho utilizzato Bootstrap per rendere l'interfaccia responsive.</p>
+                      <div class="text-center mt-4 md:mt-8">
+                        <button class="rounded-full bg-radial-black p-2 card-shadow">
+                          <a class="text-white" href="https://noemirea17.github.io/html-css-spotifyweb/" target="_blank">Visualizza progetto</a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- single card -->
+                  <div class="max-w-[300px] card-shadow">
+                    <div>
+                      <img src="assets/digitalocean.png" alt="">
+                    </div>
+                    <div class="bg-lightblue rounded-b-[20px] p-6 h-64">
+                      <h3 class="text-md font-bold">Digital Ocean</h3>
+                      <p class="text-base">Replica responsive dell'homepage del sito DigitalOcean. L'obiettivo principale era ricreare l'aspetto e il layout dell'homepage, assicurandosi che fosse responsive. </p>
+                      <div class="text-center mt-4 md:mt-8">
+                        <button class="rounded-full bg-radial-black p-2 card-shadow">
+                          <a class="text-white" href="https://noemirea17.github.io/html-css-digitalocean/" target="_blank">Visualizza progetto</a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- single card -->
+                  <div class="max-w-[300px] card-shadow">
+                    <div>
+                      <img src="assets/boolflix.png" alt="">
+                    </div>
+                    <div class="bg-lightblue rounded-b-[20px] p-6 h-64">
+                      <h3 class="text-md font-bold">Boolflix</h3>
+                      <p class="text-base">Replica dell'interfaccia di Netflix, sviluppata utilizzando Vue.js e integrando una chiamata API al database di The Movie Database. Ho implementato funzionalità come la ricerca dei film. </p>
+                      <div class="text-center mt-4">
+                        <button class="rounded-full bg-radial-black p-2 card-shadow">
+                          <a class="text-white" href="https://noemirea17.github.io/vue-boolflix/" target="_blank">Visualizza progetto</a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- single card -->
+                  <div class="max-w-[300px] card-shadow">
+                    <div>
+                      <img src="assets/boolzapp.png" alt="">
+                    </div>
+                    <div class="bg-lightblue rounded-b-[20px] p-6 h-64">
+                      <h3 class="text-md font-bold">Boolzapp</h3>
+                      <p class="text-base">Replica di WhatsApp sviluppata utilizzando Vue.js con funzionalità per filtrare i contatti, eliminare i messaggi, scrivere messaggi e ricevere risposte.  </p>
+                      <div class="text-center mt-4 md:mt-12">
+                        <button class="rounded-full bg-radial-black p-2 card-shadow">
+                          <a class="text-white" href="https://noemirea17.github.io/js-html-css-boolzap/" target="_blank">Visualizza progetto</a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+          
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-8 justify-items-center "
+                   
+                  >
+                      <!-- single card -->
+                      <div class="card-shadow flex flex-col md:flex-row md:w-[740px] m-auto">
+                        <img class="rounded-t-[20px] md:rounded-l-[20px] md:rounded-tr-none" src="assets/elisa.png" alt="">
+                        <div class="bg-lightblue rounded-b-[20px] md:rounded-r-[20px] md:rounded-bl-none p-6">
+                          <h3 class="text-md font-bold">Elisa Elisù (Work in progress) </h3>
+                          <p class="text-base my-6">Sito Web vetrina per un’animatrice per bambini. Questo sito web fornirà un'anteprima delle incredibili attività e servizi che l'animatrice offre per intrattenere i piccoli ospiti. Sto creando il design su Figma, successiamente sarà realizzato su Wordpress. </p>
+                          <button x-on:click="isDialogOpen = true" class="text-base font-bold" >Guarda la gallery</button>
+                        </div>
+                      </div> 
+                      <!-- single card -->
+                      <div class="card-shadow flex flex-col md:flex-row md:w-[740px] m-auto mt-8">
+                        <img class="rounded-t-[20px] md:rounded-l-[20px] md:rounded-tr-none" src="assets/portfolio.png" alt="">
+                        <div class="bg-lightblue rounded-b-[20px] md:rounded-r-[20px] md:rounded-bl-none p-6">
+                          <h3 class="text-md font-bold">My Portfolio (Lo stai guardando adesso) </h3>
+                          <p class="text-base my-6"> Progettato e sviluppato per presentare i miei progetti e le mie informazioni personali. Ho iniziato creando il design del template utilizzando Figma. Successivamente, ho trasformato il design in codice utilizzando HTML, CSS e Tailwind CSS.  </p>
+                        </div>
+                      </div>          
+                </section>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-radial-green pt-10">
+      <div class="max-w-7xl mx-auto px-3 md:px-16">
+        <h2 class="text-black-900 uppercase font-bold text-lg md:text-xl text-center mb-12">Competenze</h2>
+          <div class="bg-white py-5 px-10 md:px-14 card-shadow">
+            <h3 class="font-bold text-lg text-center">Tecnologie</h3>
+            <div class="flex flex-col md:flex-row py-10 justify-around">
+              <ul class="list-disc">
+                <li class="text-md leading-10">HTML / CSS</li>
+                <li class="text-md leading-10">BOOTSTRAP / SASS / TAILWIND</li>
+                <li class="text-md leading-10">JAVASCRIPT / JQUERY</li>
+                <li class="text-md leading-10">VUE.JS / ALPINE.JS</li>
+                <li class="text-md leading-10">FIGMA</li>
+              </ul>
+              <ul class="list-disc">
+                <li class="text-md leading-10">LARAVEL</li>
+                <li class="text-md leading-10">PHP</li>
+                <li class="text-md leading-10">MYSQL</li>
+                <li class="text-md leading-10">WORDPRESS / PRESTASHOP</li>
+              </ul>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 mt-10 md:gap-10">
+            <div class="bg-white py-5 px-3 md:px-14 card-shadow mb-10">
+              <h3 class="font-bold text-lg text-center">Su di me</h3>
+              <p class="py-10 text-md">
+                Sono una ragazza responsabile e volenterosa. Riesco a lavorare bene sia in team che in autonomia. Ho voglia di continuare ad imparare e crescere professionalmente
+              </p>
+            </div>
+            <div class="bg-white py-5 px-3 md:px-14 card-shadow mb-10 ">
+              <h3 class="font-bold text-lg text-center">Lingue</h3>
+              <ul class="py-10 list-disc">
+                <li class="text-md leading-10">Inglese: B2</li>
+                <li class="text-md leading-10">Francese: C1</li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- <div class="mt-10 grid grid-cols-2">
+            <div class="bg-white py-5 px-14 card-shadow mb-10 md:mb-0 md:mr-28 md:w-[500px]">
+              <h3 class="font-bold text-lg text-center">Su di me</h3>
+              <p class="py-10 text-md">
+                Sono una ragazza responsabile e volenterosa. Riesco a lavorare bene sia in team che in autonomia. Ho voglia di continuare ad imparare e crescere professionalmente
+              </p>
+              
+            </div>
+            <div class="bg-white py-5 px-14 card-shadow md:w-[500px]">
+              <h3 class="font-bold text-lg text-center">Lingue</h3>
+              <ul class="py-10 list-disc">
+                <li class="text-md leading-10">Inglese: B2</li>
+                <li class="text-md leading-10">Francese: C1</li>
+              </ul>
+            </div>
+          </div> -->
+      </div>
+      <div class="pt-16">
+        <h3 class="text-white text-lg text-center">Contatti</h3>
+        <div class="flex flex-col md:flex-row md:justify-around px-5 py-8">
+          <div class="flex items-center">
+            <img src="assets/phone.svg" alt="">
+            <span class="text-white ml-3">3403886005</span>
+          </div>
+          <div class="flex items-center my-4">
+            <img src="assets/email.svg" alt="">
+            <span class="text-white ml-3">noemi.rea1717@gmail.com</span>
+          </div>
+          <div class="flex items-center">
+            <img src="assets/linkedin.svg" alt="">
+            <span class="text-white ml-3">@NoemiRea</span>
+          </div>
+        </div>
+      </div>
+      <img class="w-full" src="assets/Polygon-footer.svg" alt="">
+    </section>
+     <!-- overlay -->
+     <div
+     class="overflow-auto z-50"
+     style="background-color: rgba(0,0,0,0.8)"
+     x-show="isDialogOpen"
+     :class="{ 'inset-0 z-50 flex items-start justify-center fixed': isDialogOpen }"
+ >
+   <!-- dialog -->
+   <div
+        class=" m-4 sm:m-8 fixed top-[50%] -translate-y-2/4"
+        x-show="isDialogOpen"
+        @click.away="isDialogOpen = false"
+   >
+       <div class="flex justify-end items-center p-2 text-xl">
+           <button class="text-white text-xl" type="button" @click="isDialogOpen = false">X</button>
+    </div>
+    <div class="p-2">
+             <!-- content -->
+             
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.7/dist/css/splide.min.css">
+              <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.7/dist/js/splide.min.js"></script>
+
+              <style>
+                  .splide__pagination__page.is-active {
+                      background: #333;
+                  }
+              </style>
+
+              <div
+                  x-data="{
+                      init() {
+                          new Splide(this.$refs.splide, {
+                              perPage: 1,
+                              gap: '0.5rem',
+                          }).mount()
+                      },
+                  }"
+              >
+                  <section x-ref="splide" class="splide" aria-label="Splide/Alpine.js Carousel Example">
+                      <div class="splide__track">
+                          <ul class="splide__list">
+                              <li class="splide__slide flex flex-col items-center justify-center pb-8">
+                                  <img  src="assets/elisa-1.PNG" alt="placeholder image">
+                              </li>
+
+                              <li class="splide__slide flex flex-col items-center justify-center pb-8">
+                                  <img src="assets/elisa-2.PNG" alt="placeholder image">
+                              </li>
+
+                              <li class="splide__slide flex flex-col items-center justify-center pb-8">
+                                  <img  src="assets/elisa-3.PNG" alt="placeholder image">
+                              </li>
+                              <li class="splide__slide flex flex-col items-center justify-center pb-8">
+                                <img  src="assets/elisa-4.PNG" alt="placeholder image">
+                            </li>
+                            <li class="splide__slide flex flex-col items-center justify-center pb-8">
+                              <img  src="assets/elisa-5.PNG" alt="placeholder image">
+                          </li>
+                          </ul>
+                      </div>
+                  </section>
+              </div>
+           
+          
+
+       </div>
+   </div><!-- /dialog -->
+ </div><!-- /overlay -->   
+  </body>
+</html>
